@@ -1,0 +1,42 @@
+{
+  "inicio": {
+    "pergunta": "Qual é o tipo de problema?",
+    "opcoes": [
+      {
+        "texto": "Problema técnico",
+        "destino": "tecnico"
+      },
+      {
+        "texto": "Dúvida sobre produto",
+        "destino": "produto"
+      },
+      {
+        "texto": "SLM - Distribuição de Carteiras",
+        "destino": "custom_1750971504498"
+      },
+      {
+        "texto": "Consulta Versão",
+        "destino": "custom_1751054874821"
+      },
+      {
+        "texto": "FGC",
+        "destino": "custom_1751377260453"
+      }
+    ]
+  },
+  "custom_1750971504498": "<p>Distribuição de Carteiras</p>",
+  "custom_1751054874821": {
+    "pergunta": "SELECT * FROM GLBVERSOES",
+    "opcoes": []
+  },
+  "custom_1751377260453": {
+    "pergunta": "Instruções para FGC.",
+    "opcoes": [
+      {
+        "texto": "LOG",
+        "destino": "custom_1751377301453"
+      }
+    ]
+  },
+  "custom_1751377301453": "<p>Analisar...</p>"
+}
