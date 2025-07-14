@@ -7,71 +7,49 @@
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 2rem;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      line-height: 1.6;
+      padding: 2rem;
+      color: #333;
     }
-    
+
+    .animated-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+      background-size: 300% 300%;
+      animation: gradientShift 3s ease infinite;
+      z-index: 1000;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .faq-container {
       max-width: 900px;
       margin: 0 auto;
-      background: #fff;
-      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
       backdrop-filter: blur(10px);
       position: relative;
-      overflow: hidden;
+      animation: slideIn 0.6s ease-out;
     }
-    
-    .faq-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-      background-size: 200% 100%;
-      animation: gradientShift 3s ease-in-out infinite;
-    }
-    
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-    
-    .question {
-      font-weight: 600;
-      font-size: 1.4rem;
-      margin-bottom: 1.5rem;
-      color: #2c3e50;
-      text-align: center;
-      padding: 1rem;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      border-radius: 15px;
-      border-left: 5px solid #667eea;
-      animation: slideInDown 0.6s ease-out;
-    }
-    
-    @keyframes slideInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes slideInUp {
+
+    @keyframes slideIn {
       from {
         opacity: 0;
         transform: translateY(30px);
@@ -81,701 +59,731 @@
         transform: translateY(0);
       }
     }
-    
-    .options {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    
-    .options button {
-      padding: 1rem 1.5rem;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      animation: slideInUp 0.6s ease-out;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    .options button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
-    }
-    
-    .options button:hover::before {
-      left: 100%;
-    }
-    
-    .options button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-      background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-    }
-    
-    .options button:active {
-      transform: translateY(0);
-      transition: transform 0.1s;
-    }
-    
-    .controls {
-      margin-top: 2rem;
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    .controls button {
-      padding: 0.75rem 1.5rem;
-      border: 2px solid #667eea;
-      border-radius: 25px;
-      background: transparent;
-      color: #667eea;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .controls button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: #667eea;
-      transition: left 0.3s ease;
-      z-index: -1;
-    }
-    
-    .controls button:hover::before {
-      left: 0;
-    }
-    
-    .controls button:hover {
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    .search {
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    
-    .search input {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      border-radius: 25px;
-      border: 2px solid #e9ecef;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      background: #f8f9fa;
-    }
-    
-    .search input:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      background: white;
-    }
-    
-    .search input::placeholder {
-      color: #6c757d;
-    }
-    
-    #adminPanel {
-      display: none;
-      margin-top: 2rem;
-      border-top: 2px solid #e9ecef;
-      padding-top: 2rem;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      border-radius: 15px;
-      padding: 2rem;
-      animation: slideInUp 0.6s ease-out;
-    }
-    
-    #adminPanel h3 {
-      color: #2c3e50;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+
+    .main-title {
       text-align: center;
-      font-size: 1.3rem;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
-    #adminPanel label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #495057;
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-    
-    #adminPanel input, #adminPanel select, #adminDestino {
-      margin-bottom: 1.5rem;
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 2px solid #e9ecef;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      background: white;
-    }
-    
-    #adminPanel input:focus, #adminPanel select:focus, #adminDestino:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-    
-    #adminPanel button {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 1rem;
-    }
-    
-    #adminPanel button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    #adminExtraInputs {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      border: 2px solid #e9ecef;
-      margin: 1rem 0;
-    }
-    
+
     #toggleAdmin {
       position: absolute;
       top: 0.5rem;
       right: 1rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 25px;
-      font-weight: 500;
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
       cursor: pointer;
+      font-weight: 600;
       transition: all 0.3s ease;
+      z-index: 100;
       box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-      z-index: 1000;
-      font-size: 0.9rem;
-    }
-    
-    #toggleAdmin:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-    
-    #flowTree {
-      font-family: 'Courier New', monospace;
-      white-space: pre;
-      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-      color: #ecf0f1;
-      padding: 1.5rem;
-      border-radius: 15px;
-      margin-top: 2rem;
-      display: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      border: 2px solid #34495e;
-      animation: slideInUp 0.6s ease-out;
-    }
-    
-    img.preview {
-      max-width: 100%;
-      margin-top: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    
-    .image-preview-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #f8f9fa;
-      border-radius: 10px;
-      border: 2px dashed #e9ecef;
-    }
-    
-    .image-preview-item {
-      position: relative;
-      max-width: 200px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-    
-    .image-preview-item:hover {
-      transform: scale(1.05);
-    }
-    
-    .image-preview-item img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      border: 3px solid #fff;
-    }
-    
-    .image-preview-item .remove-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 10px rgba(231, 76, 60, 0.3);
-    }
-    
-    .image-preview-item .remove-btn:hover {
-      background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
-      transform: scale(1.1);
-      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5);
-    }
-    
-    .selected-files-info {
-      margin-top: 0.75rem;
-      font-size: 0.9em;
-      color: #6c757d;
-      font-weight: 500;
-      text-align: center;
-      padding: 0.5rem;
-      background: #e9ecef;
-      border-radius: 8px;
     }
 
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
+    #toggleAdmin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    #searchInput {
       width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-      animation: fadeIn 0.3s ease-out;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .modal-content {
-      background: #ffffff;
-      padding: 2.5rem;
-      border-radius: 20px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-      text-align: center;
-      width: 100%;
-      max-width: 450px;
-      position: relative;
-      animation: slideInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    @keyframes slideInScale {
-      from {
-        opacity: 0;
-        transform: translateY(-30px) scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-    
-    .modal-content h2 {
-      margin-bottom: 1.5rem;
-      color: #2c3e50;
-      font-weight: 600;
-      font-size: 1.5rem;
-    }
-    
-    .modal-content input {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      margin-bottom: 1.5rem;
-      border: 2px solid #e9ecef;
-      border-radius: 12px;
+      padding: 1rem;
+      border: 2px solid #e1e8ed;
+      border-radius: 15px;
       font-size: 1rem;
+      margin-bottom: 2rem;
       transition: all 0.3s ease;
-      background: #f8f9fa;
+      background: rgba(255, 255, 255, 0.9);
     }
-    
-    .modal-content input:focus {
+
+    #searchInput:focus {
       outline: none;
       border-color: #667eea;
       box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      background: white;
+      transform: translateY(-1px);
     }
-    
-    .modal-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: space-between;
-    }
-    
-    .modal-actions button {
-      flex: 1;
-      padding: 1rem 1.5rem;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
+
+    .question {
+      font-size: 1.4rem;
       font-weight: 600;
-      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+      line-height: 1.6;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .option {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      padding: 1.2rem;
+      cursor: pointer;
       transition: all 0.3s ease;
+      font-weight: 500;
       position: relative;
       overflow: hidden;
     }
-    
-    .modal-actions button:first-child {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    .modal-actions button:first-child:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-    
-    .modal-actions button:last-child {
-      background: #e9ecef;
-      color: #495057;
-      border: 2px solid #dee2e6;
-    }
-    
-    .modal-actions button:last-child:hover {
-      background: #dee2e6;
-      transform: translateY(-2px);
+
+    .option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+      transition: left 0.5s ease;
     }
 
-    /* Ícone engrenagem melhorado */
-    #gearIcon {
-      float: right;
-      cursor: pointer;
-      font-size: 1.4em;
-      margin-top: -15px;
-      padding: 0.5rem;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    #gearIcon:hover {
-      transform: rotate(90deg) scale(1.1);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    .option:hover::before {
+      left: 100%;
     }
 
-    /* Responsividade melhorada */
-    @media (max-width: 768px) {
-      body {
-        padding: 1rem;
+    .option:hover {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      border-color: #667eea;
+    }
+
+    .solution {
+      background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+      border-left: 5px solid #28a745;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.1);
+      animation: slideInLeft 0.6s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
       }
-      
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .navigation {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-button {
+      background: linear-gradient(135deg, #ffc107, #e0a800);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 0.8rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+    }
+
+    .nav-button.secondary {
+      background: linear-gradient(135deg, #6c757d, #495057);
+      box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    .nav-button.secondary:hover {
+      box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+    }
+
+    #adminPanel {
+      display: none;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-top: 2rem;
+      border: 2px solid #dee2e6;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    #adminPanel h3 {
+      color: #495057;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #dee2e6;
+      padding-bottom: 0.5rem;
+    }
+
+    #adminPanel label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    #adminPanel input, #adminPanel select, #adminPanel textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    #adminPanel input:focus, #adminPanel select:focus, #adminPanel textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    #adminPanel button {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    #adminPanel button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    #adminPanel button.edit {
+      background: linear-gradient(135deg, #17a2b8, #138496);
+    }
+
+    #adminPanel button.edit:hover {
+      box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+    }
+
+    #adminPanel button.delete {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+    }
+
+    #adminPanel button.delete:hover {
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    #adminPanel button.save {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+    }
+
+    #adminPanel button.save:hover {
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    img.preview {
+      max-width: 200px;
+      max-height: 150px;
+      margin: 0.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #495057;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #dee2e6;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .modal button {
+      width: 48%;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .modal .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      margin-right: 4%;
+    }
+
+    .modal .btn-secondary {
+      background: linear-gradient(135deg, #ffc107, #e0a800);
+      color: white;
+    }
+
+    .modal button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .edit-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .edit-modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    #flowDisplay {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 2rem;
+      white-space: pre-wrap;
+      box-shadow: 0 4px 15px rgba(45, 55, 72, 0.3);
+    }
+
+    .config-gear {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1.2rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .config-gear:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .field-group {
+      background: rgba(248, 249, 250, 0.8);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #dee2e6;
+    }
+
+    .field-group h4 {
+      color: #495057;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
       .faq-container {
+        margin: 1rem;
         padding: 1.5rem;
       }
-      
-      .question {
-        font-size: 1.2rem;
+
+      .main-title {
+        font-size: 2rem;
       }
-      
-      .controls {
+
+      .options {
+        gap: 0.8rem;
+      }
+
+      .option {
+        padding: 1rem;
+      }
+
+      .navigation {
         flex-direction: column;
         align-items: center;
       }
-      
-      .controls button {
+
+      .nav-button {
         width: 100%;
         max-width: 200px;
       }
-      
-      .modal-content {
-        margin: 1rem;
-        padding: 2rem;
-      }
-      
-      .modal-actions {
-        flex-direction: column;
+
+      #toggleAdmin {
+        position: static;
+        margin-bottom: 1rem;
+        width: 100%;
       }
     }
-
-    .loading {
-      text-align: center;
-      padding: 2rem;
-      color: #667eea;
-      font-size: 1.2rem;
-    }
-
-    .error {
-      text-align: center;
-      padding: 2rem;
-      color: #e74c3c;
-      font-size: 1.1rem;
-      background: #ffeaea;
-      border-radius: 10px;
-      margin: 1rem 0;
-    }
-
-</style>
+  </style>
 </head>
 <body>
+  <div class="animated-bar"></div>
+  
   <div class="faq-container">
-    <h1 style="text-align: center; color: #2c3e50; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">FAQ INTERATIVO</h1>
     <button id="toggleAdmin" onclick="toggleAdminMode()">Modo Admin</button>
-    <div class="search">
-      <input type="text" id="searchInput" placeholder="Buscar...">
-    </div>
+    
+    <h1 class="main-title">FAQ INTERATIVO</h1>
+    
+    <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="buscar()">
+    
     <div id="faqContent">
-      <div class="loading">Carregando dados...</div>
+      <div class="question">Bem-vindo ao FAQ Interativo! Use o painel administrativo para criar suas primeiras perguntas e respostas.</div>
     </div>
-    <div class="controls">
-      <button onclick="goBack()">Voltar</button>
-      <button onclick="restart()">Reiniciar</button>
-      <button onclick="toggleTree()">Ver Fluxo</button>
+    
+    <div class="navigation">
+      <button class="nav-button secondary" onclick="voltar()">Voltar</button>
+      <button class="nav-button secondary" onclick="reiniciar()">Reiniciar</button>
+      <button class="nav-button secondary" onclick="toggleTree()">Ver Fluxo</button>
     </div>
-
-    <div id="adminPanel">
-      <h3>Adicionar novo caminho</h3>
-
-<!-- Ícone engrenagem e Modal de Alterar Senha -->
-<style>
-  #gearIcon {
-    float: right;
-    cursor: pointer;
-    font-size: 1.2em;
-    margin-top: -10px;
-  }
-</style>
-
-<span id="gearIcon" onclick="openPasswordModal()">⚙️</span>
-
-<div id="changePasswordModal" class="modal-overlay" style="display: none;">
-  <div class="modal-content">
-    <h2>Alterar Senha de Admin</h2>
-    <input type="password" id="oldPassword" placeholder="Senha atual">
-    <input type="password" id="newPassword" placeholder="Nova senha">
-    <input type="password" id="confirmPassword" placeholder="Confirmar nova senha">
-    <div class="modal-actions">
-      <button onclick="changeAdminPassword()">Salvar</button>
-      <button onclick="closePasswordModal()">Cancelar</button>
-    </div>
+    
+    <div id="flowDisplay" style="display: none;"></div>
   </div>
-</div>
 
+  <div id="adminPanel">
+    <div class="field-group">
+      <h3>Adicionar novo caminho</h3>
       <label>Origem:</label>
       <select id="adminOrigem"></select>
       <label>Texto da opção:</label>
-      <input type="text" id="adminOpcao">
+      <input type="text" id="adminOpcao" placeholder="Ex: Problema técnico">
       <label>Tipo de destino:</label>
       <select id="adminTipo">
         <option value="pergunta">Nova Pergunta</option>
         <option value="solucao">Solução Final</option>
       </select>
-      <label>Texto do destino:</label>
-      <textarea id="adminDestino" rows="4"></textarea>
-
-      <div id="adminExtraInputs">
-        <label>Anexar Imagens:</label>
-        <input type="file" id="adminImagem" accept="image/*" multiple>
-        <div class="selected-files-info" id="selectedFilesInfo"></div>
-        <div class="image-preview-container" id="imagePreviewContainer"></div>
-        <label>Anexar Documento:</label>
-        <input type="file" id="adminDocumento" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt" multiple>
-      </div>
-
-      <button onclick="adicionarCaminho()">Adicionar</button>
-
-      <h3 style="margin-top:2rem;">Gerenciar caminhos personalizados</h3>
-      <label>Selecione o item para editar ou excluir:</label>
-      <select id="adminDelete"></select>
-      <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-        <button onclick="editarCaminho()" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">Editar</button>
-        <button onclick="excluirCaminho()" style="background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);">Excluir</button>
-      </div>
+      <label>Texto do destino (opcional):</label>
+      <textarea id="adminDestino" placeholder="Digite a pergunta ou solução... (campo opcional)"></textarea>
       
-      <h3 style="margin-top:2rem;">Salvar dados no arquivo JSON</h3>
-      <button onclick="salvarDados()" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">Salvar no JSON</button>
+      <label>Anexar Imagens:</label>
+      <input type="file" id="adminImages" multiple accept="image/*" onchange="updateImagePreview()">
+      <div id="imagePreviewContainer"></div>
+      <div id="selectedFilesInfo"></div>
+      <label>Anexar Documento:</label>
+      <input type="file" id="adminDocument" accept=".pdf,.doc,.docx,.txt">
+      <button onclick="adicionarCaminho()">Adicionar</button>
     </div>
 
-    <div id="flowTree"></div>
+    <div class="field-group">
+      <h3>Gerenciar caminhos personalizados</h3>
+      <label>Selecione o item para editar ou excluir:</label>
+      <select id="adminDelete"></select>
+      <button class="edit" onclick="editarCaminhoCompleto()">Editar</button>
+      <button class="delete" onclick="excluirCaminho()">Excluir</button>
+    </div>
+
+    <div class="field-group">
+      <h3>Configurações do administrador</h3>
+      <button class="config-gear" onclick="abrirModalSenha()">⚙️</button>
+      <button class="delete" onclick="sairModoAdmin()" style="margin-left: 1rem;">Sair do Modo Admin</button>
+    </div>
+
+    <div class="field-group">
+      <h3>Salvar dados no arquivo JSON</h3>
+      <button class="save" onclick="salvarDados()">Salvar no JSON</button>
+    </div>
+  </div>
+
+  <!-- Modal de Login Admin -->
+  <div id="adminLoginModal" class="modal">
+    <div class="modal-content">
+      <h2>Login Administrador</h2>
+      <input type="password" id="adminPasswordInput" placeholder="Digite a senha">
+      <div class="button-container">
+        <button class="btn-primary" onclick="loginAdmin()">Entrar</button>
+        <button class="btn-secondary" onclick="closeAdminModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Configuração de Senha -->
+  <div id="senhaModal" class="modal">
+    <div class="modal-content">
+      <h2>Configurações</h2>
+      <label>Nova senha:</label>
+      <input type="password" id="novaSenha" placeholder="Digite a nova senha">
+      <div class="button-container">
+        <button class="btn-primary" onclick="trocarSenha()">Salvar</button>
+        <button class="btn-secondary" onclick="fecharModalSenha()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div id="editModal" class="edit-modal">
+    <div class="edit-modal-content">
+      <h2>Editar Item</h2>
+      <div id="editContent"></div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn-primary" onclick="salvarEdicao()">Salvar</button>
+        <button class="btn-secondary" onclick="fecharModalEdicao()">Cancelar</button>
+      </div>
+    </div>
   </div>
 
   <script>
     let flowBase = {};
-    let flowCustom = JSON.parse(localStorage.getItem("flowCustom")) || {};
-    let pathStack = ["inicio"];
+    let flowCustom = {};
+    let currentStep = "inicio";
+    let history = [];
     let isAdmin = false;
-    let selectedImages = [];
+    let editingKey = null;
 
-    // Carregar dados do arquivo JSON
+    // Carregar dados do JSON
     async function carregarDados() {
       try {
-        const response = await fetch('./faq_data.json');
-        if (!response.ok) {
-          throw new Error('Erro ao carregar dados');
+        const response = await fetch('faq_data_limpo.json');
+        if (response.ok) {
+          const data = await response.json();
+          if (Object.keys(data).length > 0) {
+            flowBase = data;
+          }
+        } else {
+          console.log('Arquivo JSON não encontrado, usando dados padrão');
         }
-        flowBase = await response.json();
-        renderCurrentStep();
       } catch (error) {
-        console.error('Erro ao carregar dados:', error);
-        document.getElementById("faqContent").innerHTML = 
-          '<div class="error">Erro ao carregar dados. Verifique se o arquivo faq_data.json está no mesmo diretório.</div>';
+        console.log('Erro ao carregar dados, usando dados padrão:', error);
       }
+      renderCurrentStep();
     }
 
     function getFlow() {
-      return Object.assign({}, flowBase, flowCustom);
+      return { ...flowBase, ...flowCustom };
     }
 
     function renderCurrentStep() {
       const flow = getFlow();
-      const currentKey = pathStack[pathStack.length - 1];
+      const step = flow[currentStep];
       const content = document.getElementById("faqContent");
-      const node = flow[currentKey];
-      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
 
-      content.innerHTML = "";
-
-      if (!node) {
-        content.innerHTML = '<div class="error">Nó não encontrado: ' + currentKey + '</div>';
+      if (!step) {
+        content.innerHTML = '<div class="question">Bem-vindo ao FAQ Interativo! Use o painel administrativo para criar suas primeiras perguntas e respostas.</div>';
         return;
       }
 
-      if (typeof node === "string") {
-        content.innerHTML = `<div class="question">${node}</div>`;
-        return;
+      if (typeof step === "string") {
+        content.innerHTML = `<div class="solution">${step}</div>`;
+      } else if (step.pergunta) {
+        let html = `<div class="question">${step.pergunta}</div>`;
+        
+        html += '<div class="options">';
+        
+        if (step.opcoes && step.opcoes.length > 0) {
+          step.opcoes.forEach(opcao => {
+            html += `<div class="option" onclick="selectOption('${opcao.destino}')">${opcao.texto}</div>`;
+          });
+        }
+        
+        html += '</div>';
+        
+        if (step.imagens && step.imagens.length > 0) {
+          step.imagens.forEach(img => {
+            html += `<img src="${img}" class="preview" alt="Imagem">`;
+          });
+        }
+        
+        if (step.documento) {
+          html += `<p><a href="${step.documento}" target="_blank">📄 Ver documento anexo</a></p>`;
+        }
+        
+        content.innerHTML = html;
       }
-
-      content.innerHTML = `<div class="question">${node.pergunta}</div>`;
-
-      const filtered = node.opcoes.filter(op => op.texto.toLowerCase().includes(searchTerm));
-
-      const optionsDiv = document.createElement("div");
-      optionsDiv.classList.add("options");
-
-      filtered.forEach(op => {
-        const btn = document.createElement("button");
-        btn.textContent = op.texto;
-        btn.onclick = () => {
-          pathStack.push(op.destino);
-          renderCurrentStep();
-        };
-        optionsDiv.appendChild(btn);
-      });
-
-      content.appendChild(optionsDiv);
     }
 
-    function goBack() {
-      if (pathStack.length > 1) {
-        pathStack.pop();
+    function selectOption(destino) {
+      history.push(currentStep);
+      currentStep = destino;
+      renderCurrentStep();
+    }
+
+    function voltar() {
+      if (history.length > 0) {
+        currentStep = history.pop();
         renderCurrentStep();
       }
     }
 
-    function restart() {
-      pathStack = ["inicio"];
-      document.getElementById("searchInput").value = "";
+    function reiniciar() {
+      currentStep = "inicio";
+      history = [];
       renderCurrentStep();
     }
 
-    function toggleAdminMode() {
-      if (!isAdmin) {
-        document.getElementById("adminLoginModal").style.display = "flex";
+    function buscar() {
+      const termo = document.getElementById("searchInput").value.toLowerCase();
+      const flow = getFlow();
+      
+      if (!termo) {
+        renderCurrentStep();
         return;
       }
-      isAdmin = false;
-      document.getElementById("adminPanel").style.display = "none";
+
+      let resultados = [];
+      
+      for (let key in flow) {
+        const item = flow[key];
+        if (typeof item === "string" && item.toLowerCase().includes(termo)) {
+          resultados.push(`<div class="solution">🔍 <strong>Resultado encontrado:</strong><br>${item}</div>`);
+        } else if (item.pergunta && item.pergunta.toLowerCase().includes(termo)) {
+          resultados.push(`<div class="question">🔍 <strong>Pergunta encontrada:</strong><br>${item.pergunta}</div>`);
+        }
+      }
+      
+      const content = document.getElementById("faqContent");
+      if (resultados.length > 0) {
+        content.innerHTML = resultados.join('');
+      } else {
+        content.innerHTML = '<div class="question">🔍 Nenhum resultado encontrado para sua busca.</div>';
+      }
     }
 
-    let adminSenha = "123456"; // Senha inicial
+    function toggleTree() {
+      if (!isAdmin) {
+        alert("Acesso restrito! Faça login como administrador.");
+        return;
+      }
+      
+      const display = document.getElementById("flowDisplay");
+      if (display.style.display === "none") {
+        const flow = getFlow();
+        let tree = "📋 ESTRUTURA DO FAQ:\n\n";
+        
+        for (let key in flow) {
+          const item = flow[key];
+          tree += `🔹 ${key}:\n`;
+          
+          if (typeof item === "string") {
+            tree += `   💬 ${item.substring(0, 100)}${item.length > 100 ? '...' : ''}\n\n`;
+          } else if (item.pergunta) {
+            tree += `   ❓ ${item.pergunta}\n`;
+            if (item.opcoes) {
+              item.opcoes.forEach(opcao => {
+                tree += `      ➤ ${opcao.texto} → ${opcao.destino}\n`;
+              });
+            }
+            tree += '\n';
+          }
+        }
+        
+        display.textContent = tree;
+        display.style.display = "block";
+      } else {
+        display.style.display = "none";
+      }
+    }
 
-    function confirmAdminLogin() {
-      const senha = document.getElementById("adminPasswordInput").value;
-      if (senha === adminSenha) {
+    function toggleAdminMode() {
+      document.getElementById("adminLoginModal").style.display = "flex";
+    }
+
+    function loginAdmin() {
+      const password = document.getElementById("adminPasswordInput").value;
+      const savedPassword = localStorage.getItem("adminPassword") || "123456";
+      
+      if (password === savedPassword) {
         isAdmin = true;
         document.getElementById("adminPanel").style.display = "block";
         updateAdminOrigemOptions();
         updateAdminDeleteOptions();
         closeAdminModal();
+        alert("Login realizado com sucesso!");
       } else {
         alert("Senha incorreta!");
       }
-    }
-
-    function changeAdminPassword() {
-      const oldP = document.getElementById("oldPassword").value;
-      const newP = document.getElementById("newPassword").value;
-      const confirmP = document.getElementById("confirmPassword").value;
-
-      if (oldP !== adminSenha) {
-        alert("Senha atual incorreta.");
-        return;
-      }
-      if (newP.length < 4) {
-        alert("A nova senha deve ter ao menos 4 caracteres.");
-        return;
-      }
-      if (newP !== confirmP) {
-        alert("Confirmação incorreta.");
-        return;
-      }
-      adminSenha = newP;
-      alert("Senha alterada com sucesso!");
-      closePasswordModal();
-    }
-
-    function openPasswordModal() {
-      document.getElementById("changePasswordModal").style.display = "flex";
-    }
-    
-    function closePasswordModal() {
-      document.getElementById("changePasswordModal").style.display = "none";
-      document.getElementById("oldPassword").value = "";
-      document.getElementById("newPassword").value = "";
-      document.getElementById("confirmPassword").value = "";
     }
 
     function closeAdminModal() {
@@ -783,310 +791,325 @@
       document.getElementById("adminLoginModal").style.display = "none";
     }
 
+    function abrirModalSenha() {
+      document.getElementById("senhaModal").style.display = "flex";
+    }
+
+    function fecharModalSenha() {
+      document.getElementById("novaSenha").value = "";
+      document.getElementById("senhaModal").style.display = "none";
+    }
+
+    function trocarSenha() {
+      const novaSenha = document.getElementById("novaSenha").value;
+      if (novaSenha.length < 4) {
+        alert("A senha deve ter pelo menos 4 caracteres!");
+        return;
+      }
+      
+      localStorage.setItem("adminPassword", novaSenha);
+      alert("Senha alterada com sucesso!");
+      fecharModalSenha();
+    }
+
+    function sairModoAdmin() {
+      if (confirm("Deseja realmente sair do modo administrador?")) {
+        isAdmin = false;
+        document.getElementById("adminPanel").style.display = "none";
+        alert("Você saiu do modo administrador.");
+      }
+    }
+
     function updateAdminOrigemOptions() {
-      const flow = getFlow();
       const select = document.getElementById("adminOrigem");
+      const flow = getFlow();
       select.innerHTML = "";
-      for (const key in flow) {
-        if (typeof flow[key] === "object") {
-          const opt = document.createElement("option");
-          opt.value = key;
-          
-          // Mostrar título da cascata ao invés de apenas a chave
-          let displayText = key;
-          if (flow[key].pergunta) {
-            displayText = flow[key].pergunta;
-          }
-          
-          opt.textContent = displayText;
-          select.appendChild(opt);
+      
+      for (let key in flow) {
+        const item = flow[key];
+        if (item.pergunta) {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = item.pergunta;
+          select.appendChild(option);
         }
       }
     }
 
     function updateAdminDeleteOptions() {
       const select = document.getElementById("adminDelete");
-      select.innerHTML = "";
       const flow = getFlow();
-      for (const key in flowCustom) {
-        const opt = document.createElement("option");
-        opt.value = key;
+      select.innerHTML = "";
+      
+      for (let key in flow) {
+        const item = flow[key];
+        const option = document.createElement("option");
+        option.value = key;
         
-        // Mostrar título da cascata ao invés de "custom" + número
-        let displayText = key;
-        if (typeof flowCustom[key] === "object" && flowCustom[key].pergunta) {
-          displayText = flowCustom[key].pergunta;
-        } else if (typeof flowCustom[key] === "string") {
-          // Para soluções, mostrar os primeiros 50 caracteres
-          const cleanText = flowCustom[key].replace(/<[^>]*>/g, '').trim();
-          displayText = cleanText.length > 50 ? cleanText.substring(0, 50) + "..." : cleanText;
+        if (typeof item === "string") {
+          const preview = item.replace(/<[^>]*>/g, '').substring(0, 50);
+          option.textContent = `${preview}${item.length > 50 ? '...' : ''}`;
+        } else if (item.pergunta) {
+          option.textContent = item.pergunta;
         }
         
-        opt.textContent = displayText;
-        select.appendChild(opt);
+        select.appendChild(option);
       }
     }
-
-    function updateImagePreview() {
-      const container = document.getElementById("imagePreviewContainer");
-      const info = document.getElementById("selectedFilesInfo");
-      container.innerHTML = "";
-      if (selectedImages.length === 0) {
-        info.textContent = "";
-        return;
-      }
-      info.textContent = `${selectedImages.length} imagem(ns) selecionada(s)`;
-      selectedImages.forEach((imageData, index) => {
-        const itemDiv = document.createElement("div");
-        itemDiv.className = "image-preview-item";
-        const img = document.createElement("img");
-        img.src = imageData.dataUrl;
-        img.alt = imageData.name;
-        const removeBtn = document.createElement("button");
-        removeBtn.className = "remove-btn";
-        removeBtn.innerHTML = "×";
-        removeBtn.onclick = () => removeImage(index);
-        itemDiv.appendChild(img);
-        itemDiv.appendChild(removeBtn);
-        container.appendChild(itemDiv);
-      });
-    }
-
-    function removeImage(index) {
-      selectedImages.splice(index, 1);
-      updateImagePreview();
-    }
-
-    document.getElementById("adminImagem").addEventListener("change", function(e) {
-      const files = Array.from(e.target.files);
-      files.forEach(file => {
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = function(event) {
-            selectedImages.push({
-              file: file,
-              name: file.name,
-              dataUrl: event.target.result
-            });
-            updateImagePreview();
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-      e.target.value = "";
-    });
 
     function adicionarCaminho() {
       const origem = document.getElementById("adminOrigem").value;
-      const textoOpcao = document.getElementById("adminOpcao").value.trim();
-      const tipoDestino = document.getElementById("adminTipo").value;
-      const textoDestino = document.getElementById("adminDestino").value.trim();
-      const docInput = document.getElementById("adminDocumento");
-      const docFiles = Array.from(docInput.files);
-
-      const destinoKey = `custom_${Date.now()}`;
-
-      if (!origem || !textoOpcao || !textoDestino) {
-        alert("Preencha os campos principais.");
+      const opcaoTexto = document.getElementById("adminOpcao").value;
+      const tipo = document.getElementById("adminTipo").value;
+      const destino = document.getElementById("adminDestino").value;
+      
+      if (!opcaoTexto) {
+        alert("Por favor, preencha o texto da opção!");
         return;
       }
-
-      if (!flowCustom[origem]) flowCustom[origem] = JSON.parse(JSON.stringify(getFlow()[origem]));
-      flowCustom[origem].opcoes.push({ texto: textoOpcao, destino: destinoKey });
-
-      let finalText = `<p>${textoDestino}</p>`;
-      if (selectedImages.length > 0) {
-        selectedImages.forEach(imageData => {
-          finalText += `<br><img class='preview' src='${imageData.dataUrl}' alt='${imageData.name}'>`;
-        });
+      
+      const flow = getFlow();
+      const destinoKey = `custom_${Date.now()}`;
+      
+      if (!flow[origem] || !flow[origem].opcoes) {
+        alert("Origem inválida!");
+        return;
       }
-
-      const loadDocuments = (files) => {
-        return Promise.all(files.map(file => {
-          return new Promise(resolve => {
-            const reader = new FileReader();
-            reader.onload = () => {
-              const content = `<br><a href='${reader.result}' target='_blank'>📎 ${file.name}</a>`;
-              resolve(content);
-            };
-            reader.readAsDataURL(file);
-          });
-        }));
-      };
-
-      loadDocuments(docFiles).then(docHTMLArray => {
-        finalText += docHTMLArray.join("");
-        flowCustom[destinoKey] = tipoDestino === "pergunta" ? { pergunta: textoDestino, opcoes: [] } : finalText;
-        localStorage.setItem("flowCustom", JSON.stringify(flowCustom));
-        document.getElementById("adminOpcao").value = "";
-        document.getElementById("adminDestino").value = "";
-        docInput.value = "";
-        selectedImages = [];
-        updateImagePreview();
-        updateAdminOrigemOptions();
-        updateAdminDeleteOptions();
-        alert("Caminho adicionado!");
-        renderCurrentStep();
-      });
+      
+      const novaOpcao = { texto: opcaoTexto, destino: destinoKey };
+      flow[origem].opcoes.push(novaOpcao);
+      
+      if (tipo === "pergunta") {
+        const textoDestino = destino || "Nova pergunta - edite para adicionar conteúdo";
+        flow[destinoKey] = {
+          pergunta: textoDestino,
+          opcoes: []
+        };
+      } else {
+        const textoDestino = destino || "Nova solução - edite para adicionar conteúdo";
+        flow[destinoKey] = textoDestino;
+      }
+      
+      const images = document.getElementById("adminImages").files;
+      const document_file = document.getElementById("adminDocument").files[0];
+      
+      if (images.length > 0 && typeof flow[destinoKey] === "object") {
+        flow[destinoKey].imagens = [];
+        for (let i = 0; i < images.length; i++) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            flow[destinoKey].imagens.push(e.target.result);
+          };
+          reader.readAsDataURL(images[i]);
+        }
+      }
+      
+      if (document_file && typeof flow[destinoKey] === "object") {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          flow[destinoKey].documento = e.target.result;
+        };
+        reader.readAsDataURL(document_file);
+      }
+      
+      flowCustom = { ...flowCustom, ...flow };
+      
+      // Limpar campos
+      document.getElementById("adminOpcao").value = "";
+      document.getElementById("adminDestino").value = "";
+      document.getElementById("adminImages").value = "";
+      document.getElementById("adminDocument").value = "";
+      document.getElementById("imagePreviewContainer").innerHTML = "";
+      
+      updateAdminOrigemOptions();
+      updateAdminDeleteOptions();
+      renderCurrentStep();
+      
+      alert("Caminho adicionado com sucesso!");
     }
 
-    function editarCaminho() {
+    function editarCaminhoCompleto() {
       const key = document.getElementById("adminDelete").value;
-      if (!key || !flowCustom[key]) {
-        alert("Selecione um item válido para editar.");
+      if (!key) {
+        alert("Selecione um item para editar!");
         return;
       }
       
-      const item = flowCustom[key];
+      const flow = getFlow();
+      const item = flow[key];
+      editingKey = key;
       
-      if (typeof item === "object" && item.pergunta) {
-        // É uma pergunta - permitir editar pergunta e opções
-        const novoTexto = prompt("Editar pergunta:", item.pergunta);
-        if (novoTexto && novoTexto.trim()) {
-          flowCustom[key].pergunta = novoTexto.trim();
+      let editContent = "";
+      
+      if (typeof item === "string") {
+        editContent = `
+          <label>Conteúdo da solução:</label>
+          <textarea id="editTexto" style="width: 100%; height: 200px; padding: 0.8rem; border: 2px solid #dee2e6; border-radius: 8px;">${item}</textarea>
+          <label>Anexar Imagens:</label>
+          <input type="file" id="editImages" multiple accept="image/*">
+          <label>Anexar Documento:</label>
+          <input type="file" id="editDocument" accept=".pdf,.doc,.docx,.txt">
+        `;
+      } else if (item.pergunta) {
+        editContent = `
+          <label>Texto da pergunta:</label>
+          <textarea id="editPergunta" style="width: 100%; height: 100px; padding: 0.8rem; border: 2px solid #dee2e6; border-radius: 8px;">${item.pergunta}</textarea>
           
-          // Perguntar se quer editar as opções também
-          if (confirm("Deseja editar as opções desta pergunta também?")) {
-            let opcoesTexto = "";
-            item.opcoes.forEach((opcao, index) => {
-              opcoesTexto += `${index + 1}. ${opcao.texto}\n`;
-            });
-            
-            const novasOpcoes = prompt("Edite as opções (uma por linha):\n\n" + opcoesTexto, 
-              item.opcoes.map(op => op.texto).join("\n"));
-            
-            if (novasOpcoes && novasOpcoes.trim()) {
-              const linhas = novasOpcoes.split("\n").filter(linha => linha.trim());
-              // Manter os destinos originais, apenas alterar os textos
-              linhas.forEach((linha, index) => {
-                if (flowCustom[key].opcoes[index]) {
-                  flowCustom[key].opcoes[index].texto = linha.trim();
-                }
+          <label>Opções (uma por linha):</label>
+          <textarea id="editOpcoes" style="width: 100%; height: 150px; padding: 0.8rem; border: 2px solid #dee2e6; border-radius: 8px;">${item.opcoes ? item.opcoes.map(op => op.texto).join('\n') : ''}</textarea>
+          <label>Anexar Imagens:</label>
+          <input type="file" id="editImages" multiple accept="image/*">
+          <label>Anexar Documento:</label>
+          <input type="file" id="editDocument" accept=".pdf,.doc,.docx,.txt">
+        `;
+      }
+      
+      document.getElementById("editContent").innerHTML = editContent;
+      document.getElementById("editModal").style.display = "flex";
+    }
+
+    function salvarEdicao() {
+      if (!editingKey) return;
+      
+      const flow = getFlow();
+      const item = flow[editingKey];
+      
+      if (typeof item === "string") {
+        const novoTexto = document.getElementById("editTexto").value;
+        flow[editingKey] = novoTexto;
+      } else if (item.pergunta) {
+        const novaPergunta = document.getElementById("editPergunta").value;
+        const novasOpcoes = document.getElementById("editOpcoes").value.split('\n').filter(op => op.trim());
+        
+        flow[editingKey].pergunta = novaPergunta;
+        
+        if (novasOpcoes.length > 0) {
+          flow[editingKey].opcoes = flow[editingKey].opcoes || [];
+          
+          // Manter destinos existentes ou criar novos
+          novasOpcoes.forEach((opcaoTexto, index) => {
+            if (flow[editingKey].opcoes[index]) {
+              flow[editingKey].opcoes[index].texto = opcaoTexto.trim();
+            } else {
+              const novoDestino = `custom_${Date.now()}_${index}`;
+              flow[editingKey].opcoes.push({
+                texto: opcaoTexto.trim(),
+                destino: novoDestino
               });
+              flow[novoDestino] = "Nova solução - edite para adicionar conteúdo";
             }
-          }
+          });
           
-          localStorage.setItem("flowCustom", JSON.stringify(flowCustom));
-          updateAdminDeleteOptions();
-          updateAdminOrigemOptions();
-          alert("Pergunta editada com sucesso!");
-          renderCurrentStep();
-        }
-      } else if (typeof item === "string") {
-        // É uma solução - permitir edição completa do HTML
-        const cleanText = item.replace(/<[^>]*>/g, '').trim();
-        const novoTexto = prompt("Editar solução:", cleanText);
-        if (novoTexto && novoTexto.trim()) {
-          // Manter formatação HTML básica
-          flowCustom[key] = `<p>${novoTexto.trim()}</p>`;
-          localStorage.setItem("flowCustom", JSON.stringify(flowCustom));
-          updateAdminDeleteOptions();
-          alert("Solução editada com sucesso!");
-          renderCurrentStep();
+          // Remover opções extras
+          if (flow[editingKey].opcoes.length > novasOpcoes.length) {
+            flow[editingKey].opcoes = flow[editingKey].opcoes.slice(0, novasOpcoes.length);
+          }
         }
       }
+      
+      // Processar imagens e documentos
+      const images = document.getElementById("editImages").files;
+      const document_file = document.getElementById("editDocument").files[0];
+      
+      if (images.length > 0 && typeof flow[editingKey] === "object") {
+        flow[editingKey].imagens = flow[editingKey].imagens || [];
+        for (let i = 0; i < images.length; i++) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            flow[editingKey].imagens.push(e.target.result);
+          };
+          reader.readAsDataURL(images[i]);
+        }
+      }
+      
+      if (document_file && typeof flow[editingKey] === "object") {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          flow[editingKey].documento = e.target.result;
+        };
+        reader.readAsDataURL(document_file);
+      }
+      
+      flowCustom = { ...flowCustom, ...flow };
+      
+      updateAdminOrigemOptions();
+      updateAdminDeleteOptions();
+      renderCurrentStep();
+      fecharModalEdicao();
+      
+      alert("Item editado com sucesso!");
+    }
+
+    function fecharModalEdicao() {
+      document.getElementById("editModal").style.display = "none";
+      editingKey = null;
     }
 
     function excluirCaminho() {
       const key = document.getElementById("adminDelete").value;
-      if (!key || !flowCustom[key]) {
-        alert("Selecione um item válido para excluir.");
+      if (!key) {
+        alert("Selecione um item para excluir!");
         return;
       }
       
       if (confirm("Tem certeza que deseja excluir este item?")) {
-        // Remove referências a este item de outros nós
-        for (const origem in flowCustom) {
-          if (typeof flowCustom[origem] === "object" && Array.isArray(flowCustom[origem].opcoes)) {
-            flowCustom[origem].opcoes = flowCustom[origem].opcoes.filter(op => op.destino !== key);
+        const flow = getFlow();
+        delete flow[key];
+        
+        // Remover referências a este item
+        for (let flowKey in flow) {
+          const item = flow[flowKey];
+          if (item.opcoes) {
+            item.opcoes = item.opcoes.filter(opcao => opcao.destino !== key);
           }
         }
         
-        // Remove o item
-        delete flowCustom[key];
-        localStorage.setItem("flowCustom", JSON.stringify(flowCustom));
-        updateAdminDeleteOptions();
+        flowCustom = { ...flowCustom, ...flow };
+        
         updateAdminOrigemOptions();
-        alert("Item excluído com sucesso!");
+        updateAdminDeleteOptions();
         renderCurrentStep();
+        
+        alert("Item excluído com sucesso!");
       }
     }
 
-    // Nova função para salvar dados no JSON
+    function updateImagePreview() {
+      const files = document.getElementById("adminImages").files;
+      const container = document.getElementById("imagePreviewContainer");
+      container.innerHTML = "";
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.className = "preview";
+          container.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
     function salvarDados() {
-      const dadosCompletos = getFlow();
-      const jsonString = JSON.stringify(dadosCompletos, null, 2);
-      
-      // Criar um blob com os dados
-      const blob = new Blob([jsonString], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      
-      // Criar um link para download
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'faq_data_atualizado.json';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      alert("Dados salvos! O arquivo 'faq_data_atualizado.json' foi baixado. Substitua o arquivo original por este para manter as alterações.");
-    }
-
-    // MODIFICAÇÃO: Função toggleTree agora verifica se o usuário é admin
-    function toggleTree() {
-      if (!isAdmin) {
-        alert("Acesso restrito! Apenas administradores podem visualizar o fluxo.");
-        return;
-      }
-      
-      const div = document.getElementById("flowTree");
-      if (div.style.display === "block") {
-        div.style.display = "none";
-        return;
-      }
-      div.style.display = "block";
       const flow = getFlow();
-      const visited = new Set();
-      function renderNode(key, depth) {
-        if (visited.has(key)) return `${"  ".repeat(depth)}↪ ${key} (cíclico)
-`;
-        visited.add(key);
-        const node = flow[key];
-        if (!node) return `${"  ".repeat(depth)}↪ ${key} (não encontrado)
-`;
-        if (typeof node === "string") return `${"  ".repeat(depth)}🔹 ${key}: [Conteúdo] 
-`;
-        let result = `${"  ".repeat(depth)}🔸 ${key}: ${node.pergunta}
-`;
-        node.opcoes.forEach(op => {
-          result += `${"  ".repeat(depth + 1)}→ ${op.texto}
-`;
-          result += renderNode(op.destino, depth + 2);
-        });
-        return result;
-      }
-      div.textContent = renderNode("inicio", 0);
+      const dataStr = JSON.stringify(flow, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(dataBlob);
+      link.download = 'faq_data_atualizado.json';
+      link.click();
+      
+      alert("Dados salvos com sucesso! Arquivo baixado.");
     }
 
-    document.getElementById("searchInput").addEventListener("input", renderCurrentStep);
-    
-    // Carregar dados quando a página carrega
-    carregarDados();
+    // Inicializar
+    window.onload = function() {
+      carregarDados();
+    };
   </script>
-
-<!-- Modal de Login Admin -->
-<div id="adminLoginModal" class="modal-overlay" style="display: none;">
-  <div class="modal-content">
-    <h2>Login Administrador</h2>
-    <input type="password" id="adminPasswordInput" placeholder="Digite a senha">
-    <div class="modal-actions">
-      <button onclick="confirmAdminLogin()">Entrar</button>
-      <button onclick="closeAdminModal()">Cancelar</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
 
